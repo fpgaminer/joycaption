@@ -1,0 +1,7 @@
+[
+	"Write a descriptive caption for this image in a formal tone.",
+	{
+		"prompt": "Write a medium-length stable diffusion prompt for this image.",
+		"weight": 0.5
+	}
+]
