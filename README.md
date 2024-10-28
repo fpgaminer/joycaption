@@ -132,7 +132,7 @@ JoyCaption Alpha Two offers multiple modes of caption generation to suit differe
      - "Write a {length} descriptive caption for this image in a casual tone."
    - **Note**: Informal tone is ... weird and experimental at the moment. It helps expand the vocabulary of the captions and writing styles, which could be helpful, but yeah ... expect everything to be "vibes" and "rocking". 😒
 
-2. **Training Prompt**: Writes more like the average Stable Diffusion prompt, with a mixture of natural language and booru-like tags, mimicing what users might prompt SD to get the image.
+2. **Training Prompt**: Writes more like the average Stable Diffusion prompt, with a mixture of natural language and booru-like tags, mimicking what users might prompt SD to get the image.
    - Examples:
      - "Write a stable diffusion prompt for this image."
      - "Write a stable diffusion prompt for this image within {word_count} words."
