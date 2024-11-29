@@ -41,10 +41,8 @@ NOTE: This example is a bit verbose because the current release of JoyCaption do
 
 ```python
 import torch
-import torch.amp
-import torchvision.transforms.functional as TVF
 from PIL import Image
-from transformers import AutoTokenizer, LlavaForConditionalGeneration
+from transformers import AutoProcessor, LlavaForConditionalGeneration
 
 
 IMAGE_PATH = "image.jpg"
@@ -55,26 +53,13 @@ MODEL_NAME = "fancyfeast/llama-joycaption-alpha-two-hf-llava"
 # Load JoyCaption
 # bfloat16 is the native dtype of the LLM used in JoyCaption (Llama 3.1)
 # device_map=0 loads the model into the first GPU
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, use_fast=True)
+processor = AutoProcessor.from_pretrained(MODEL_NAME)
 llava_model = LlavaForConditionalGeneration.from_pretrained(MODEL_NAME, torch_dtype="bfloat16", device_map=0)
 llava_model.eval()
 
 with torch.no_grad():
-	# Load and preprocess image
-	# Normally you would use the Processor here, but the image module's processor
-	# has some buggy behavior and a simple resize in Pillow yields higher quality results
+	# Load image
 	image = Image.open(IMAGE_PATH)
-
-	if image.size != (384, 384):
-		image = image.resize((384, 384), Image.LANCZOS)
-
-	image = image.convert("RGB")
-	pixel_values = TVF.pil_to_tensor(image)
-
-	# Normalize the image
-	pixel_values = pixel_values / 255.0
-	pixel_values = TVF.normalize(pixel_values, [0.5], [0.5])
-	pixel_values = pixel_values.to(torch.bfloat16).unsqueeze(0)
 
 	# Build the conversation
 	convo = [
@@ -89,30 +74,33 @@ with torch.no_grad():
 	]
 
 	# Format the conversation
-	convo_string = tokenizer.apply_chat_template(convo, tokenize=False, add_generation_prompt=True)
+	# WARNING: HF's handling of chat's on Llava models is very fragile.  This specific combination of processor.apply_chat_template(), and processor() works
+	# but if using other combinations always inspect the final input_ids to ensure they are correct.  Often times you will end up with multiple <bos> tokens
+	# if not careful, which can make the model perform poorly.
+	convo_string = processor.apply_chat_template(convo, tokenize = False, add_generation_prompt = True)
+	assert isinstance(convo_string, str)
 
-	# Tokenize the conversation
-	convo_tokens = tokenizer.encode(convo_string, add_special_tokens=False, truncation=False)
+	# Process the inputs
+	inputs = processor(text=[convo_string], images=[image], return_tensors="pt").to('cuda')
+	inputs['pixel_values'] = inputs['pixel_values'].to(torch.bfloat16)
 
-	# Repeat the image tokens
-	input_tokens = []
-	for token in convo_tokens:
-		if token == llava_model.config.image_token_index:
-			input_tokens.extend([llava_model.config.image_token_index] * llava_model.config.image_seq_length)
-		else:
-			input_tokens.append(token)
-
-	input_ids = torch.tensor(input_tokens, dtype=torch.long).unsqueeze(0)
-	attention_mask = torch.ones_like(input_ids)
-
-	# Generate the caption
-	generate_ids = llava_model.generate(input_ids=input_ids.to('cuda'), pixel_values=pixel_values.to('cuda'), attention_mask=attention_mask.to('cuda'), max_new_tokens=300, do_sample=True, suppress_tokens=None, use_cache=True)[0]
+	# Generate the captions
+	generate_ids = llava_model.generate(
+		**inputs,
+		max_new_tokens=300,
+		do_sample=True,
+		suppress_tokens=None,
+		use_cache=True,
+		temperature=0.6,
+		top_k=None,
+		top_p=0.9,
+	)[0]
 
 	# Trim off the prompt
-	generate_ids = generate_ids[input_ids.shape[1]:]
+	generate_ids = generate_ids[inputs['input_ids'].shape[1]:]
 
 	# Decode the caption
-	caption = tokenizer.decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+	caption = processor.tokenizer.decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)
 	caption = caption.strip()
 	print(caption)
 ```
@@ -205,6 +193,22 @@ The following extra instructions can be appended to the prompt to guide the capt
 ### Limitations
 
 **WARNING:** Alpha Two was heavily trained on the above Prompts and Extra Options.  It is not a general instruction follower.  Feel free to experiment outside of these prompts, but don't expect great results (yet).
+
+
+## vLLM
+
+vLLM provides the highest performance inference for JoyCaption, and an OpenAI compatible API so JoyCaption can be used like any other VLMs. Example usage:
+
+```bash
+vllm serve fancyfeast/llama-joycaption-alpha-two-hf-llava --max-model-len 4096 --enable-prefix-caching
+```
+
+VLMs are a bit finicky on vLLM, and vLLM is memory hungry, so you may have to adjust settings for your particular environment, such as forcing eager mode, adjusting max-model-len, adjusting gpu_memory_utilization, etc.
+
+
+## Finetuning
+
+Finetuning scripts and documentation can be found in the `finetuning` directory.  The `finetuning/README.md` file contains detailed instructions on how to prepare your data and train JoyCaption on it.
 
 
 ## Current Status
