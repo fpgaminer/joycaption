@@ -42,6 +42,8 @@ parser.add_argument("--top-k", type=lambda x: none_or_type(x, int), default=None
 parser.add_argument("--max-new-tokens", type=int, default=256, help="Maximum length of the generated caption (in tokens)")
 parser.add_argument("--num-workers", type=int, default=4, help="Number of workers loading images in parallel")
 parser.add_argument("--model", type=str, default="fancyfeast/llama-joycaption-alpha-two-hf-llava", help="Model to use")
+parser.add_argument("--prepend", type=str, default="", help="String to prepend to all captions")
+parser.add_argument("--append", type=str, default="", help="String to append to all captions")
 
 
 PIL.Image.MAX_IMAGE_PIXELS = 933120000   # Quiets Pillow from giving warnings on really large images (WARNING: Exposes a risk of DoS from malicious images)
@@ -127,8 +129,7 @@ def main():
 		captions = [c.strip() for c in captions]
 
 		for path, caption in zip(batch['paths'], captions):
-			write_caption(Path(path), caption)
-		
+			write_caption(Path(path), args.prepend + caption + args.append)
 		pbar.update(len(captions))
 
 
