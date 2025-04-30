@@ -42,6 +42,8 @@ parser.add_argument("--top-k", type=lambda x: none_or_type(x, int), default=None
 parser.add_argument("--max-new-tokens", type=int, default=256, help="Maximum length of the generated caption (in tokens)")
 parser.add_argument("--num-workers", type=int, default=4, help="Number of workers loading images in parallel")
 parser.add_argument("--model", type=str, default="fancyfeast/llama-joycaption-alpha-two-hf-llava", help="Model to use")
+parser.add_argument("--prepend", type=str, help="String to prepend to captions")
+parser.add_argument("--append", type=str, help="String to append to captions")
 
 
 PIL.Image.MAX_IMAGE_PIXELS = 933120000   # Quiets Pillow from giving warnings on really large images (WARNING: Exposes a risk of DoS from malicious images)
@@ -127,8 +129,8 @@ def main():
 		captions = [c.strip() for c in captions]
 
 		for path, caption in zip(batch['paths'], captions):
-			write_caption(Path(path), caption)
 		
+			write_caption(Path(path), caption, args.prepend, args.append)
 		pbar.update(len(captions))
 
 
@@ -151,7 +153,7 @@ def trim_off_prompt(input_ids: list[int], eoh_id: int, eot_id: int) -> list[int]
 	return input_ids[:i]
 
 
-def write_caption(image_path: Path, caption: str):
+def write_caption(image_path: Path, caption: str, prepend: str, append: str):
 	caption_path = image_path.with_suffix(".txt")
 
 	try:
@@ -164,7 +166,9 @@ def write_caption(image_path: Path, caption: str):
 		return
 	
 	try:
+		if prepend is not None and len(prepend) > 0: os.write(f, prepend.encode("utf-8"))
 		os.write(f, caption.encode("utf-8"))
+		if append is not None and len(append) > 0: os.write(f, append.encode("utf-8"))
 		os.close(f)
 	except Exception as e:
 		logging.error(f"Failed to write caption to '{caption_path}': {e}")
