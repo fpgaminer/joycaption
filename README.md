@@ -12,7 +12,7 @@ JoyCaption is an open, free, and uncensored captioning Visual Language Model (VL
 JoyCaption is an image captioning Visual Language Model (VLM) being built from the ground up as a free, open, and uncensored model for the community to use in training Diffusion models.
 
 Key Features:
-- **Free and Open**: It will be released for free, open weights, no restrictions, and just like [bigASP](https://www.reddit.com/r/StableDiffusion/comments/1dbasvx/the_gory_details_of_finetuning_sdxl_for_30m/), will come with training scripts and lots of juicy details on how it gets built.
+- **Free and Open**: Released for free, open weights, no restrictions, and just like [bigASP](https://www.reddit.com/r/StableDiffusion/comments/1dbasvx/the_gory_details_of_finetuning_sdxl_for_30m/), will come with training scripts and lots of juicy details on how it gets built.
 - **Uncensored**: Equal coverage of SFW and NSFW concepts. No "cylindrical shaped object with a white substance coming out on it" here.
 - **Diversity**: All are welcome here. Do you like digital art? Photoreal? Anime? Furry? JoyCaption is for everyone. Pains are being taken to ensure broad coverage of image styles, content, ethnicity, gender, orientation, etc.
 - **Minimal Filtering**: JoyCaption is trained on large swathes of images so that it can understand almost all aspects of our world. almost. Illegal content will never be tolerated in JoyCaption's training.
@@ -36,8 +36,6 @@ To see JoyCaption in action, check out the [demo on HuggingFace Spaces](https://
 To use JoyCaption locally, you can download the model from [Hugging Face](https://huggingface.co/fancyfeast/llama-joycaption-alpha-two-hf-llava) and integrate it into your existing workflows.
 
 ### Example Usage
-
-NOTE: This example is a bit verbose because the current release of JoyCaption does not have a `transformers` `Processor` configured yet, so the preprocessing has to be done manually. Sorry!
 
 ```python
 import torch
@@ -204,6 +202,14 @@ vllm serve fancyfeast/llama-joycaption-alpha-two-hf-llava --max-model-len 4096 -
 ```
 
 VLMs are a bit finicky on vLLM, and vLLM is memory hungry, so you may have to adjust settings for your particular environment, such as forcing eager mode, adjusting max-model-len, adjusting gpu_memory_utilization, etc.
+
+On Windows the easiest way to use vLLM is to setup docker and run something like:
+
+```bash
+docker run --gpus all --ipc=host -p 8000:8000 -v "%USERPROFILE%\.cache\huggingface:/root/.cache/huggingface" vllm/vllm-openai:latest --model fancyfeast/llama-joycaption-beta-one-hf-llava --max-model-len 4096 --enable-prefix-caching
+```
+
+`-v "%USERPROFILE%\.cache\huggingface:/root/.cache/huggingface"` persists the model cache outside of docker, so it doesn't have to re-download the model every time you run the container.
 
 
 ## Finetuning
