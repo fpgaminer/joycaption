@@ -1,0 +1,6 @@
+accelerate==1.6.0
+pillow==11.2.1
+torch==2.7.0
+torchaudio==2.7.0
+transformers==4.51.3
+triton==3.3.0
