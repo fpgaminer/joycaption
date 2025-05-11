@@ -1,3 +1,4 @@
+# NOTE: These are not hard requirements; I just dumped a known working, freshly installed environment. The most important requirement is ensuring transformers is up-to-date.
 accelerate==1.6.0
 pillow==11.2.1
 torch==2.7.0
