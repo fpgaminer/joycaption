@@ -63,7 +63,7 @@ class Config:
 
 	dataset: str = "your_dataset.json"                   # Dataset path (parquet)
 	images_path: Path = Path("../data/resized-384-squish")   # Images path
-	finetune: str = "fancyfeast/llama-joycaption-alpha-two-hf-llava"   # Model to finetune from
+	finetune: str = "fancyfeast/llama-joycaption-beta-one-hf-llava"   # Model to finetune from
 	gradient_checkpointing: bool = True                  # Use gradient checkpointing
 	test_size: int = 128                                 # Test size
 	grad_scaler_init: float = 2**16                      # Initial grad scaler
