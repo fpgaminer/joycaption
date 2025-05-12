@@ -2,7 +2,7 @@
 
 JoyCaption is an open, free, and uncensored captioning Visual Language Model (VLM).
 
-[**Try the Demo on HuggingFace**](https://huggingface.co/spaces/fancyfeast/joy-caption-alpha-two) **|** [**Download the Current Model on Hugging Face**](https://huggingface.co/fancyfeast/llama-joycaption-alpha-two-hf-llava) **|** [**Latest Release Post**](https://civitai.com/articles/7697)
+[**Try the Demo on HuggingFace**](https://huggingface.co/spaces/fancyfeast/joy-caption-beta-one) **|** [**Download the Current Model on Hugging Face**](https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava) **|** [**Latest Release Post**](https://civitai.com/articles/7697)
 
 ![This image is a digital meme featuring a photograph of a golden retriever walking on a wet asphalt road. The dog, with a light golden coat, wears a red collar and leash, and is captured mid-stride, with its tongue out. The background is blurred, emphasizing the dog. Above the dog, in bold black text on a white background, it reads, "Self-supervised Learning." The overall tone is humorous, combining the concept of self-supervised learning with the playful image of the dog.](dog.jpg)
 
@@ -29,11 +29,11 @@ I'm building JoyCaption to help fill this gap by performing near or on-par with 
 
 ### Demo
 
-To see JoyCaption in action, check out the [demo on HuggingFace Spaces](https://huggingface.co/spaces/fancyfeast/joy-caption-alpha-two).
+To see JoyCaption in action, check out the [demo on HuggingFace Spaces](https://huggingface.co/spaces/fancyfeast/joy-caption-beta-one).
 
 ### Installation
 
-To use JoyCaption locally, you can download the model from [Hugging Face](https://huggingface.co/fancyfeast/llama-joycaption-alpha-two-hf-llava) and integrate it into your existing workflows.
+To use JoyCaption locally, you can download the model from [Hugging Face](https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava) and integrate it into your existing workflows.
 
 ### Example Usage
 
@@ -45,7 +45,7 @@ from transformers import AutoProcessor, LlavaForConditionalGeneration
 
 IMAGE_PATH = "image.jpg"
 PROMPT = "Write a long descriptive caption for this image in a formal tone."
-MODEL_NAME = "fancyfeast/llama-joycaption-alpha-two-hf-llava"
+MODEL_NAME = "fancyfeast/llama-joycaption-beta-one-hf-llava"
 
 
 # Load JoyCaption
@@ -85,7 +85,7 @@ with torch.no_grad():
 	# Generate the captions
 	generate_ids = llava_model.generate(
 		**inputs,
-		max_new_tokens=300,
+		max_new_tokens=512,
 		do_sample=True,
 		suppress_tokens=None,
 		use_cache=True,
@@ -106,59 +106,79 @@ with torch.no_grad():
 
 ## How to Prompt JoyCaption
 
-JoyCaption Alpha Two offers multiple modes of caption generation to suit different needs. `Descriptive Caption` prompting is the most useful, with the other modes being _experimental_. The HuggingFace demo has a nice interface for selecting the output mode and extra options, and it outputs the prompt it used.  Otherwise, here are all the prompts that JoyCaption Alpha Two understands:
+JoyCaption Beta One offers multiple modes of caption generation to suit different needs. `Descriptive Caption` and `Straightforward` are the most useful, with the other modes being interesting but a little less stable. The HuggingFace demo has a nice interface for selecting the output mode and extra options, and it outputs the prompt it used.  Otherwise, here are all the prompts that JoyCaption Beta One understands:
 
-1. **Descriptive Caption**: Writes descriptive captions for the image, either in a formal or informal tone.
+1. **Descriptive Caption**: Writes descriptive captions for the image, either in a formal or casual tone.
    - Examples:
-     - "Write a descriptive caption for this image in a formal tone."
-     - "Write a descriptive caption for this image in a formal tone within {word_count} words."
-     - "Write a {length} descriptive caption for this image in a formal tone."
+     - "Write a long detailed description for this image."
+     - "Write a detailed description for this image in {word_count} words or less."
+     - "Write a {length} detailed description for this image."
      - "Write a descriptive caption for this image in a casual tone."
      - "Write a descriptive caption for this image in a casual tone within {word_count} words."
      - "Write a {length} descriptive caption for this image in a casual tone."
-   - **Note**: Informal tone is ... weird and experimental at the moment. It helps expand the vocabulary of the captions and writing styles, which could be helpful, but yeah ... expect everything to be "vibes" and "rocking". 😒
+   - **Note**: Casual tone can be a bit weird and needs more work, often falling back on a style that is akin to a robot pretending to be "hip" with the youth.
 
-2. **Training Prompt**: Writes more like the average Stable Diffusion prompt, with a mixture of natural language and booru-like tags, mimicing what users might prompt SD to get the image.
+2. **Straightforward Caption**: A more concise, objective style than Descriptive.
    - Examples:
-     - "Write a stable diffusion prompt for this image."
-     - "Write a stable diffusion prompt for this image within {word_count} words."
-     - "Write a {length} stable diffusion prompt for this image."
-   - **Note**: This mode is still a work in progress and somewhat unstable, occasionally glitching out into a repetition loop (due to limitations of stock Llama 3.1). Use with caution.
+     - "Write a straightforward caption for this image. Begin with the main subject and medium. Mention pivotal elements—people, objects, scenery—using confident, definite language. Focus on concrete details like color, shape, texture, and spatial relationships. Show how elements interact. Omit mood and speculative wording. If text is present, quote it exactly. Note any watermarks, signatures, or compression artifacts. Never mention what's absent, resolution, or unobservable details. Vary your sentence structure and keep the description concise, without starting with “This image is…” or similar phrasing."
+     - "Write a straightforward caption for this image within {word_count} words. Begin with the main subject and medium. Mention pivotal elements—people, objects, scenery—using confident, definite language. Focus on concrete details like color, shape, texture, and spatial relationships. Show how elements interact. Omit mood and speculative wording. If text is present, quote it exactly. Note any watermarks, signatures, or compression artifacts. Never mention what's absent, resolution, or unobservable details. Vary your sentence structure and keep the description concise, without starting with “This image is…” or similar phrasing."
+     - "Write a {length} straightforward caption for this image. Begin with the main subject and medium. Mention pivotal elements—people, objects, scenery—using confident, definite language. Focus on concrete details like color, shape, texture, and spatial relationships. Show how elements interact. Omit mood and speculative wording. If text is present, quote it exactly. Note any watermarks, signatures, or compression artifacts. Never mention what's absent, resolution, or unobservable details. Vary your sentence structure and keep the description concise, without starting with “This image is…” or similar phrasing."
 
-3. **MidJourney**: Similar to Training Prompt mode but more like MidJourney prompts.
+3. **Stable Diffusion Prompt**: Tries to mimic how users typically write Stable Diffusion prompts, with a mixture of natural language and booru-like tags.
    - Examples:
-	 - "Write a MidJourney prompt for this image."
+     - "Output a stable diffusion prompt that is indistinguishable from a real stable diffusion prompt."
+     - "Output a stable diffusion prompt that is indistinguishable from a real stable diffusion prompt. {word_count} words or less."
+     - "Output a {length} stable diffusion prompt that is indistinguishable from a real stable diffusion prompt."
+   - **Note**: This mode is more stable than it was in Alpha Two, but can still glitch out ~3% of the time.
+
+4. **MidJourney**: Similar to Training Prompt mode but more like MidJourney prompts.
+   - Examples:
+     - "Write a MidJourney prompt for this image."
      - "Write a MidJourney prompt for this image within {word_count} words."
      - "Write a {length} MidJourney prompt for this image."
    - **Note**: This mode is still a work in progress and somewhat unstable, occasionally glitching out into a repetition loop (due to limitations of stock Llama 3.1). Use with caution.
 
-4. **Booru Tag List**: Writes a list of Booru-style tags for the image.
+5. **Danbooru tag list**: Writes a list of Danbooru tags for the image.
    - Examples:
-     - "Write a list of Booru tags for this image."
-     - "Write a list of Booru tags for this image within {word_count} words."
-     - "Write a {length} list of Booru tags for this image."
-   - **Note**: This mode is still a work in progress and somewhat unstable, occasionally glitching out into a repetition loop (due to limitations of stock Llama 3.1). Use with caution.
+     - "Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: `artist:`, `copyright:`, `character:`, `meta:`, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text."
+     - "Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: `artist:`, `copyright:`, `character:`, `meta:`, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text. {word_count} words or less."
+     - "Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: `artist:`, `copyright:`, `character:`, `meta:`, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text. {length} length."
+   - **Note**: This mode has lower accuracy and overall performance than the other modes.
 
-5. **Booru-Like Tag List**: Similar to Booru Tag List mode, but will write outside the strict list of tags that boorus use.
+6. **e621 tag list**: Writes a list of e621 tags for the image.
+   - Examples:
+	 - "Write a comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags."
+	 - "Write a comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags. Keep it under {word_count} words."
+	 - "Write a {length} comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags."
+   - **Note**: This mode has lower accuracy and overall performance than the other modes.
+
+7. **Rule34 tag list**: Writes a list of Rule34 tags for the image.
+   - Examples:
+	 - "Write a comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags."
+     - "Write a comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags. Keep it under {word_count} words."
+     - "Write a {length} comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags."
+   - **Note**: This mode has lower accuracy and overall performance than the other modes.
+
+8. **Booru-Like Tag List**: Similar to Booru Tag List mode, but will write outside the strict list of tags that boorus use.
    - Examples:
      - "Write a list of Booru-like tags for this image."
      - "Write a list of Booru-like tags for this image within {word_count} words."
      - "Write a {length} list of Booru-like tags for this image."
    - **Note**: This mode is still a work in progress and somewhat unstable, occasionally glitching out into a repetition loop (due to limitations of stock Llama 3.1). Use with caution.
 
-6. **Art Critic Analysis**: Writes an analysis of the image like an art critic.
+9. **Art Critic Analysis**: Writes an analysis of the image like an art critic.
    - Examples:
      - "Analyze this image like an art critic would with information about its composition, style, symbolism, the use of color, light, any artistic movement it might belong to, etc."
      - "Analyze this image like an art critic would with information about its composition, style, symbolism, the use of color, light, any artistic movement it might belong to, etc. Keep it within {word_count} words."
      - "Analyze this image like an art critic would with information about its composition, style, symbolism, the use of color, light, any artistic movement it might belong to, etc. Keep it {length}."
 
-7. **Product Listing**: Writes a product listing-style caption for the image.
+10. **Product Listing**: Writes a product listing-style caption for the image.
    - Examples:
      - "Write a caption for this image as though it were a product listing."
      - "Write a caption for this image as though it were a product listing. Keep it under {word_count} words."
      - "Write a {length} caption for this image as though it were a product listing."
 
-8. **Social Media Post**: Writes a caption for the image suitable for a social media post.
+11. **Social Media Post**: Writes a caption for the image suitable for a social media post.
    - Examples:
      - "Write a caption for this image as if it were being used for a social media post."
      - "Write a caption for this image as if it were being used for a social media post. Limit the caption to {word_count} words."
@@ -186,11 +206,21 @@ The following extra instructions can be appended to the prompt to guide the capt
 - Do NOT use any ambiguous language.
 - Include whether the image is sfw, suggestive, or nsfw.
 - ONLY describe the most important elements of the image.
+- If it is a work of art, do not include the artist's name or the title of the work.
+- Identify the image orientation (portrait, landscape, or square) and aspect ratio if obvious.
+- Use vulgar slang and profanity, such as (but not limited to) "fucking," "slut," "cock," etc.
+- Do NOT use polite euphemisms—lean into blunt, casual phrasing.
+- Include information about the ages of any people/characters when applicable.
+- Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot.
+- Do not mention the mood/feeling/etc of the image.
+- Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.).
+- If there is a watermark, you must mention it.
+- Your response will be used by a text-to-image model, so avoid useless meta phrases like “This image shows…”, "You are looking at...", etc.
 
 
 ### Limitations
 
-**WARNING:** Alpha Two was heavily trained on the above Prompts and Extra Options.  It is not a general instruction follower.  Feel free to experiment outside of these prompts, but don't expect great results (yet).
+**WARNING:** Beta One is not a general instruction follower.  Feel free to experiment outside of these prompts, but don't expect perfect adherence.
 
 
 ## vLLM
@@ -198,7 +228,7 @@ The following extra instructions can be appended to the prompt to guide the capt
 vLLM provides the highest performance inference for JoyCaption, and an OpenAI compatible API so JoyCaption can be used like any other VLMs. Example usage:
 
 ```bash
-vllm serve fancyfeast/llama-joycaption-alpha-two-hf-llava --max-model-len 4096 --enable-prefix-caching
+vllm serve fancyfeast/llama-joycaption-beta-one-hf-llava --max-model-len 4096 --enable-prefix-caching
 ```
 
 VLMs are a bit finicky on vLLM, and vLLM is memory hungry, so you may have to adjust settings for your particular environment, such as forcing eager mode, adjusting max-model-len, adjusting gpu_memory_utilization, etc.
@@ -219,9 +249,11 @@ Finetuning scripts and documentation can be found in the `finetuning` directory.
 
 ## Current Status
 
-JoyCaption is currently at Alpha Two. This means that it is still under development, and improvements are continuously being made based on feedback from users.
+JoyCaption is currently at Beta One. This means that things are nearing completion for version 1.0.
 
-Please note that JoyCaption is not yet ready for production use. It's an experimental release, and you may encounter mistakes, especially when it comes to interactions between characters in an image, OCR, and confusing left/right when describing objects and actions in releation to people.
+Please note that JoyCaption, like all VLMs, is not perfect.  Expect issues when it comes to multiple subjects, left/right confusion, OCR inaccuracy, etc.  Instruction following is better than Alpha Two, but will occasionally fail and is not as robust as a fully fledged SOTA VLM.  And though I've drastically reduced the incidence of glitches, they do still occur 1.5 to 3% of the time.  As an independent developer, I'm limited in how far I can push things.  For comparison, commercial models like GPT4o have a glitch rate of 0.01%.
+
+If you use Beta One as a more general purpose VLM, asking it questions and such, on NSFW queries you may find that it _occasionally_ responds with a refusal.  This is not intentional, and Beta One itself was not censored.  However certain queries can trigger llama's old safety behavior.  Simply re-try the question, phrase it differently, or tweak the system prompt to get around this.
 
 
 ## Feedback and Contributions
@@ -234,3 +266,4 @@ Feedback is always welcome and crucial to helping me improve JoyCaption for ever
 * Pre-Alpha: https://www.reddit.com/r/StableDiffusion/comments/1egwgfk/joycaption_free_open_uncensored_vlm_early/
 * Alpha One: https://www.reddit.com/r/StableDiffusion/comments/1fm9pxa/joycaption_free_open_uncensored_vlm_alpha_one/
 * Alpha Two: https://civitai.com/articles/7697
+* Beta One
