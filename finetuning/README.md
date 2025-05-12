@@ -106,7 +106,7 @@ from peft import PeftModel
 
 IMAGE_PATH = "image.jpg"
 PROMPT = "Please write a question or prompt for this image. The questions or prompts you write are just like what a user might write. The prompt/question should usually be related to the image, but may occasionally not, so as not to bias things. The prompts/questions you write cover the entire range of things users might write, including the entire range of ways users might write, english level, typos, grammar mistakes, etc."
-MODEL_NAME = "fancyfeast/llama-joycaption-alpha-two-hf-llava"
+MODEL_NAME = "fancyfeast/llama-joycaption-beta-one-hf-llava"
 LORA_PATH = "../joy-caption-finetune/checkpoints/cuu2y0sx/samples_1984/model"
 
 
