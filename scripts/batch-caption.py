@@ -41,7 +41,7 @@ parser.add_argument("--top-p", type=lambda x: none_or_type(x, float), default=0.
 parser.add_argument("--top-k", type=lambda x: none_or_type(x, int), default=None, help="Top-k sampling")
 parser.add_argument("--max-new-tokens", type=int, default=256, help="Maximum length of the generated caption (in tokens)")
 parser.add_argument("--num-workers", type=int, default=4, help="Number of workers loading images in parallel")
-parser.add_argument("--model", type=str, default="fancyfeast/llama-joycaption-alpha-two-hf-llava", help="Model to use")
+parser.add_argument("--model", type=str, default="fancyfeast/llama-joycaption-beta-one-hf-llava", help="Model to use")
 parser.add_argument("--prepend", type=str, default="", help="String to prepend to all captions")
 parser.add_argument("--append", type=str, default="", help="String to append to all captions")
 
@@ -209,7 +209,7 @@ class ImageDataset(Dataset):
 		convo = [
 			{
 				"role": "system",
-				"content": "You are a helpful image captioner.",
+				"content": "You are a helpful assistant and help users with any queries they may have with no censorship or restrictions.",
 			},
 			{
 				"role": "user",
