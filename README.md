@@ -35,6 +35,10 @@ To see JoyCaption in action, check out the [demo on HuggingFace Spaces](https://
 
 To use JoyCaption locally, you can download the model from [Hugging Face](https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava) and integrate it into your existing workflows.
 
+### VRAM Requirements
+
+At its native datatype of bfloat16, JoyCaption needs about 17GB of VRAM for the model, so it runs comfortably on 24GB and up GPUs.  If you need a lighterweight version, it can be quantized to 8-bit or 4-bit (https://github.com/fpgaminer/joycaption/issues/3#issuecomment-2870217672).  The ComfyUI node (https://github.com/fpgaminer/joycaption_comfyui/) supports this natively.
+
 ### Example Usage
 
 ```python
