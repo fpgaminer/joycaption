@@ -149,6 +149,8 @@ DESCRIPTION = """
       <td>Short marketing copy as if selling the depicted object.</td></tr>
   <tr><td><strong>Social Media Post</strong></td>
       <td>Catchy caption aimed at platforms like Instagram or BlueSky.</td></tr>
+  <tr><td><strong>Custom Photo</strong></td>
+      <td>Photographic description with camera details.</td></tr>
 </table>
 
 <p style="margin-top:0.6em">
@@ -241,6 +243,11 @@ CAPTION_TYPE_MAP = {
 		"Write a caption for this image as if it were being used for a social media post. Limit the caption to {word_count} words.",
 		"Write a {length} caption for this image as if it were being used for a social media post.",
 	],
+        "Custom Photo": [
+                """Write a detailed description for this image in 70 words or less. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like “This image shows…", \"You are looking at...\", etc.""",
+                """Write a detailed description for this image in 70 words or less. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like “This image shows…", \"You are looking at...\", etc.""",
+                """Write a detailed description for this image in 70 words or less. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like “This image shows…", \"You are looking at...\", etc.""",
+        ],
 }
 NAME_OPTION = "If there is a person/character in the image you must refer to them as {name}."
 
