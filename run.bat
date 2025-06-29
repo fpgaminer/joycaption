@@ -1,0 +1,6 @@
+@echo off
+echo Activating virtual environment...
+cd gradio-app
+call venv\Scripts\activate
+echo Starting the application...
+python app.py
