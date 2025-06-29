@@ -4,7 +4,7 @@ import torch
 from PIL import Image
 from threading import Thread
 from typing import Generator
-from liger_kernel.transformers import apply_liger_kernel_to_llama
+# from liger_kernel.transformers import apply_liger_kernel_to_llama
 from pathlib import Path
 from gradio.utils import NamedString
 import zipfile
@@ -304,7 +304,7 @@ def load_model(quant: str, status: gr.HTML | None = None):
 			if quant == "bf16":
 				g_model = LlavaForConditionalGeneration.from_pretrained(MODEL_PATH, torch_dtype="bfloat16", device_map=0)
 				assert isinstance(g_model, LlavaForConditionalGeneration), f"Expected LlavaForConditionalGeneration, got {type(g_model)}"
-				apply_liger_kernel_to_llama(model=g_model.language_model)  # Meow
+				# apply_liger_kernel_to_llama(model=g_model.language_model)  # Meow
 			else:
 				from transformers import BitsAndBytesConfig
 				if quant == "8bit":

@@ -1,8 +1,8 @@
 huggingface_hub >= 0.30.1
 accelerate
-torch >= 2.6.0
+# torch >= 2.6.0
 transformers >= 4.51.0
 sentencepiece
 torchvision
-liger-kernel >= 0.5.9
+# liger-kernel >= 0.5.9
 gradio >= 5.24.0
