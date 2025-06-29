@@ -149,8 +149,6 @@ DESCRIPTION = """
       <td>Short marketing copy as if selling the depicted object.</td></tr>
   <tr><td><strong>Social Media Post</strong></td>
       <td>Catchy caption aimed at platforms like Instagram or BlueSky.</td></tr>
-  <tr><td><strong>Custom Photo</strong></td>
-      <td>Photographic description with camera details.</td></tr>
 </table>
 
 <p style="margin-top:0.6em">
@@ -188,41 +186,41 @@ CAPTION_TYPE_MAP = {
 		"Write a detailed description for this image in {word_count} words or less.",
 		"Write a {length} detailed description for this image.",
 	],
-	"Descriptive (Casual)": [
-		"Write a descriptive caption for this image in a casual tone.",
-		"Write a descriptive caption for this image in a casual tone within {word_count} words.",
-		"Write a {length} descriptive caption for this image in a casual tone.",
-	],
+	#"Descriptive (Casual)": [
+	#	"Write a descriptive caption for this image in a casual tone.",
+	#	"Write a descriptive caption for this image in a casual tone within {word_count} words.",
+	#	"Write a {length} descriptive caption for this image in a casual tone.",
+	#],
 	"Straightforward": [
-		"Write a straightforward caption for this image. Begin with the main subject and medium. Mention pivotal elements—people, objects, scenery—using confident, definite language. Focus on concrete details like color, shape, texture, and spatial relationships. Show how elements interact. Omit mood and speculative wording. If text is present, quote it exactly. Note any watermarks, signatures, or compression artifacts. Never mention what's absent, resolution, or unobservable details. Vary your sentence structure and keep the description concise, without starting with “This image is…” or similar phrasing.",
-		"Write a straightforward caption for this image within {word_count} words. Begin with the main subject and medium. Mention pivotal elements—people, objects, scenery—using confident, definite language. Focus on concrete details like color, shape, texture, and spatial relationships. Show how elements interact. Omit mood and speculative wording. If text is present, quote it exactly. Note any watermarks, signatures, or compression artifacts. Never mention what's absent, resolution, or unobservable details. Vary your sentence structure and keep the description concise, without starting with “This image is…” or similar phrasing.",
-		"Write a {length} straightforward caption for this image. Begin with the main subject and medium. Mention pivotal elements—people, objects, scenery—using confident, definite language. Focus on concrete details like color, shape, texture, and spatial relationships. Show how elements interact. Omit mood and speculative wording. If text is present, quote it exactly. Note any watermarks, signatures, or compression artifacts. Never mention what's absent, resolution, or unobservable details. Vary your sentence structure and keep the description concise, without starting with “This image is…” or similar phrasing.",
+		"Write a straightforward caption for this image. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
+		"Write a straightforward caption for this image within {word_count} words. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
+		"Write a {length} straightforward caption for this image. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
 	],
 	"Stable Diffusion Prompt": [
-		"Output a stable diffusion prompt that is indistinguishable from a real stable diffusion prompt.",
-		"Output a stable diffusion prompt that is indistinguishable from a real stable diffusion prompt. {word_count} words or less.",
-		"Output a {length} stable diffusion prompt that is indistinguishable from a real stable diffusion prompt.",
+		"Output a stable diffusion prompt that is indistinguishable from a real stable diffusion prompt. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
+		"Output a stable diffusion prompt that is indistinguishable from a real stable diffusion prompt. {word_count} words or less. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
+		"Output a {length} stable diffusion prompt that is indistinguishable from a real stable diffusion prompt. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
 	],
 	"MidJourney": [
-		"Write a MidJourney prompt for this image.",
-		"Write a MidJourney prompt for this image within {word_count} words.",
-		"Write a {length} MidJourney prompt for this image.",
+		"Write a MidJourney prompt for this image. Do NOT include anything sexual; keep it PG. Do NOT mention any text that is in the image. Specify the depth of field and whether the background is in focus or blurred. ONLY describe the most important elements of the image. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.).",
+		"Write a MidJourney prompt for this image within {word_count} words. Do NOT include anything sexual; keep it PG. Do NOT mention any text that is in the image. Specify the depth of field and whether the background is in focus or blurred. ONLY describe the most important elements of the image. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.).",
+		"Write a {length} MidJourney prompt for this image. Do NOT include anything sexual; keep it PG. Do NOT mention any text that is in the image. Specify the depth of field and whether the background is in focus or blurred. ONLY describe the most important elements of the image. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.).",
 	],
 	"Danbooru tag list": [
 		"Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: `artist:`, `copyright:`, `character:`, `meta:`, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text.",
 		"Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: `artist:`, `copyright:`, `character:`, `meta:`, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text. {word_count} words or less.",
 		"Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: `artist:`, `copyright:`, `character:`, `meta:`, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text. {length} length.",
 	],
-	"e621 tag list": [
-		"Write a comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags.",
-		"Write a comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags. Keep it under {word_count} words.",
-		"Write a {length} comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags.",
-	],
-	"Rule34 tag list": [
-		"Write a comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags.",
-		"Write a comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags. Keep it under {word_count} words.",
-		"Write a {length} comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags.",
-	],
+	#"e621 tag list": [
+	#	"Write a comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags.",
+	#	"Write a comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags. Keep it under {word_count} words.",
+	#	"Write a {length} comma-separated list of e621 tags in alphabetical order for this image. Start with the artist, copyright, character, species, meta, and lore tags (if any), prefixed by 'artist:', 'copyright:', 'character:', 'species:', 'meta:', and 'lore:'. Then all the general tags.",
+	#],
+	# "Rule34 tag list": [
+	#	"Write a comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags.",
+	#	"Write a comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags. Keep it under {word_count} words.",
+	#	"Write a {length} comma-separated list of rule34 tags in alphabetical order for this image. Start with the artist, copyright, character, and meta tags (if any), prefixed by 'artist:', 'copyright:', 'character:', and 'meta:'. Then all the general tags.",
+	#],
 	"Booru-like tag list": [
 		"Write a list of Booru-like tags for this image.",
 		"Write a list of Booru-like tags for this image within {word_count} words.",
@@ -233,21 +231,21 @@ CAPTION_TYPE_MAP = {
 		"Analyze this image like an art critic would with information about its composition, style, symbolism, the use of color, light, any artistic movement it might belong to, etc. Keep it within {word_count} words.",
 		"Analyze this image like an art critic would with information about its composition, style, symbolism, the use of color, light, any artistic movement it might belong to, etc. Keep it {length}.",
 	],
-	"Product Listing": [
-		"Write a caption for this image as though it were a product listing.",
-		"Write a caption for this image as though it were a product listing. Keep it under {word_count} words.",
-		"Write a {length} caption for this image as though it were a product listing.",
-	],
-	"Social Media Post": [
-		"Write a caption for this image as if it were being used for a social media post.",
-		"Write a caption for this image as if it were being used for a social media post. Limit the caption to {word_count} words.",
-		"Write a {length} caption for this image as if it were being used for a social media post.",
-	],
-        "Custom Photo": [
-                """Write a detailed description for this image in 70 words or less. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like “This image shows…", \"You are looking at...\", etc.""",
-                """Write a detailed description for this image in 70 words or less. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like “This image shows…", \"You are looking at...\", etc.""",
-                """Write a detailed description for this image in 70 words or less. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like “This image shows…", \"You are looking at...\", etc.""",
-        ],
+	#"Product Listing": [
+	#	"Write a caption for this image as though it were a product listing.",
+	#	"Write a caption for this image as though it were a product listing. Keep it under {word_count} words.",
+	#	"Write a {length} caption for this image as though it were a product listing.",
+	#],
+	#"Social Media Post": [
+	#	"Write a caption for this image as if it were being used for a social media post.",
+	#	"Write a caption for this image as if it were being used for a social media post. Limit the caption to {word_count} words.",
+	#	"Write a {length} caption for this image as if it were being used for a social media post.",
+	#],
+	"Photo Description": [
+		"Write a caption for this photograph. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Do NOT mention any text that is in the image. Specify the depth of field and whether the background is in focus or blurred. Do NOT use any ambiguous language. Include information about the ages of any people/characters when applicable. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
+		"Write a caption for this photograph. Keep it under {word_count} words. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Do NOT mention any text that is in the image. Specify the depth of field and whether the background is in focus or blurred. Do NOT use any ambiguous language. Include information about the ages of any people/characters when applicable. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
+		"Write a {length} caption for this image as if it were a photograph. Include information about lighting. Include information about camera angle. If it is a photo you MUST include information about what camera was likely used and details such as aperture, shutter speed, ISO, etc. Include information on the image's composition style, such as leading lines, rule of thirds, or symmetry. Do NOT mention any text that is in the image. Specify the depth of field and whether the background is in focus or blurred. Do NOT use any ambiguous language. Include information about the ages of any people/characters when applicable. Mention whether the image depicts an extreme close-up, close-up, medium close-up, medium shot, cowboy shot, medium wide shot, wide shot, or extreme wide shot. Explicitly specify the vantage height (eye-level, low-angle worm’s-eye, bird’s-eye, drone, rooftop, etc.). Your response will be used by a text-to-image model, so avoid useless meta phrases like 'This image shows…', 'You are looking at...', etc.",
+	]
 }
 NAME_OPTION = "If there is a person/character in the image you must refer to them as {name}."
 
@@ -656,18 +654,18 @@ with gr.Blocks() as demo:
 		
 		with gr.Column(scale=3):
 			with gr.Row():
-                                caption_type = gr.Dropdown(
-                                        choices=list(CAPTION_TYPE_MAP.keys()),
-                                        value="Straightforward",
-                                        label="Caption Type",
-                                )
+				caption_type = gr.Dropdown(
+					choices=list(CAPTION_TYPE_MAP.keys()),
+					value="Descriptive",
+					label="Caption Type",
+				)
 
-                                caption_length = gr.Dropdown(
-                                        choices=["any", "very short", "short", "medium-length", "long", "very long"] +
-                                                        [str(i) for i in range(20, 261, 10)],
-                                        label="Caption Length",
-                                        value="70",
-                                )
+				caption_length = gr.Dropdown(
+					choices=["any", "very short", "short", "medium-length", "long", "very long"] +
+							[str(i) for i in range(20, 261, 10)],
+					label="Caption Length",
+					value="long",
+				)
 
 	with gr.Accordion("Extra Options", open=False):
 		extra_options = gr.CheckboxGroup(
