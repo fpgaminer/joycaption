@@ -649,18 +649,18 @@ with gr.Blocks() as demo:
 		
 		with gr.Column(scale=3):
 			with gr.Row():
-				caption_type = gr.Dropdown(
-					choices=list(CAPTION_TYPE_MAP.keys()),
-					value="Descriptive",
-					label="Caption Type",
-				)
+                                caption_type = gr.Dropdown(
+                                        choices=list(CAPTION_TYPE_MAP.keys()),
+                                        value="Straightforward",
+                                        label="Caption Type",
+                                )
 
-				caption_length = gr.Dropdown(
-					choices=["any", "very short", "short", "medium-length", "long", "very long"] +
-							[str(i) for i in range(20, 261, 10)],
-					label="Caption Length",
-					value="long",
-				)
+                                caption_length = gr.Dropdown(
+                                        choices=["any", "very short", "short", "medium-length", "long", "very long"] +
+                                                        [str(i) for i in range(20, 261, 10)],
+                                        label="Caption Length",
+                                        value="70",
+                                )
 
 	with gr.Accordion("Extra Options", open=False):
 		extra_options = gr.CheckboxGroup(
