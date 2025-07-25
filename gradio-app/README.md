@@ -41,6 +41,12 @@ This is a simple Gradio GUI for the JoyCaption model.
 ### Optional: Install Liger Kernel
 For faster inference, you can install the Liger Kernel: https://github.com/linkedin/Liger-Kernel
 
+### Optional: Install bitsandbytes
+For 4-bit and 8-bit quantization, install bitsandbytes:
+```bash
+pip install bitsandbytes
+```
+
 ## Usage
 
 ### Single Image Captioning
