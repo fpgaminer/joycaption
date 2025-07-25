@@ -38,6 +38,9 @@ This is a simple Gradio GUI for the JoyCaption model.
 
 5. Open your web browser and navigate to the URL displayed in the terminal (typically http://127.0.0.1:7860)
 
+### Optional: Install Liger Kernel
+For faster inference, you can install the Liger Kernel: https://github.com/linkedin/Liger-Kernel
+
 ## Usage
 
 ### Single Image Captioning

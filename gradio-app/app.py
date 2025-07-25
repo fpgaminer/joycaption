@@ -4,7 +4,6 @@ import torch
 from PIL import Image
 from threading import Thread
 from typing import Generator
-from liger_kernel.transformers import apply_liger_kernel_to_llama
 from pathlib import Path
 from gradio.utils import NamedString
 import zipfile
@@ -17,6 +16,18 @@ from importlib import metadata
 import platform
 from textwrap import indent
 import sys
+
+
+
+# --- optional-liger bootstrap
+try:
+    from liger_kernel.transformers import apply_liger_kernel_to_llama
+    _HAS_LIGER = True
+except ModuleNotFoundError:
+    _HAS_LIGER = False
+except Exception as e:
+	_HAS_LIGER = False
+	print(f"[WARN] Liger kernel could not be imported: {e}")
 
 
 
@@ -304,7 +315,11 @@ def load_model(quant: str, status: gr.HTML | None = None):
 			if quant == "bf16":
 				g_model = LlavaForConditionalGeneration.from_pretrained(MODEL_PATH, torch_dtype="bfloat16", device_map=0)
 				assert isinstance(g_model, LlavaForConditionalGeneration), f"Expected LlavaForConditionalGeneration, got {type(g_model)}"
-				apply_liger_kernel_to_llama(model=g_model.language_model)  # Meow
+				if _HAS_LIGER:
+					try:
+						apply_liger_kernel_to_llama(model=g_model.language_model)  # Meow
+					except Exception as e:
+						print(f"[WARN] Liger kernel could not be applied: {e}")
 			else:
 				from transformers import BitsAndBytesConfig
 				if quant == "8bit":
@@ -383,8 +398,11 @@ def print_system_info():
 		f" ‣   CUDA build   : {torch.version.cuda or 'CPU-only build'}", # type: ignore
 		f"transformers      : {_version('transformers')}",
 		f"bitsandbytes      : {_version('bitsandbytes')}",
-		f"liger_kernel      : {_version('liger_kernel')}",
 	]
+	if _HAS_LIGER:
+		lines.append(f"liger_kernel      : {_version('liger_kernel')}")
+	else:
+		lines.append("liger_kernel      : -- not installed -- (optional, for faster inference)")
 
 	# ---------- GPU information ----------
 	if torch.cuda.is_available():
