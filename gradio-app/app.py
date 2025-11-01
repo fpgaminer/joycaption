@@ -322,7 +322,7 @@ def load_model(quant: str, status: gr.HTML | None = None):
 						print(f"[WARN] Liger kernel could not be applied: {e}")
 			else:
 				from transformers import BitsAndBytesConfig
-				if quant == "8bit":
+				if quant == "int8":
 					qnt_config = BitsAndBytesConfig(
 						load_in_8bit=True,
 						llm_int8_skip_modules=["vision_tower", "multi_modal_projector"],   # Transformer's Siglip implementation has bugs when quantized, so skip those.
