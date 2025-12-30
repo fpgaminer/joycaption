@@ -768,9 +768,9 @@ with gr.Blocks() as demo:
 				with gr.Column(scale=1):
 					initial_single_prompt = build_prompt(caption_type.value, caption_length.value, extra_options.value, name_input.value)
 					prompt_box_single = gr.Textbox(lines=4, label="Confirm or Edit Prompt", value=initial_single_prompt, interactive=True, elem_id="single_prompt_box")
+					unload_after_gen = gr.Checkbox(label="Unload model from RAM/VRAM after generation",value=False)
 					run_button_single = gr.Button("Caption", variant="primary")
 					output_caption_single = gr.Textbox(label="Generated Caption", lines=8, interactive=True, elem_id="single_output_box")
-					unload_after_gen = gr.Checkbox(label="Unload model from RAM/VRAM after generation",value=False)
 
 		
 		# Batch Processing Tab
