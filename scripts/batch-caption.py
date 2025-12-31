@@ -4,11 +4,12 @@ Use JoyCaption to caption images.
 """
 import argparse
 import dataclasses
+import glob as glob_module
 import json
 import logging
 import os
 import random
-from pathlib import Path
+from pathlib import Path, PurePath
 
 import PIL.Image
 import torch
@@ -291,25 +292,28 @@ def parse_prompts(prompt_str: str | None, prompt_file: str | None) -> list[Promp
 			prompts.append(Prompt(prompt=item["prompt"], weight=item["weight"]))
 		else:
 			raise ValueError(f"Invalid prompt in JSON file. Should be either a string or an object with 'prompt' and 'weight' fields: {item}")
-	
+
 	if len(prompts) == 0:
 		raise ValueError("No prompts found in JSON file")
-	
+
 	if sum(p.weight for p in prompts) <= 0.0:
 		raise ValueError("Prompt weights must sum to a positive number")
-	
+
 	return prompts
 
 
 def find_images(glob: str | None, filelist: str | Path | None) -> list[Path]:
 	if glob is None and filelist is None:
 		raise ValueError("Must specify either --glob or --filelist")
-	
+
 	paths = []
 
 	if glob is not None:
-		paths.extend(Path(".").glob(glob))
-	
+		if PurePath(glob.split('*')[0].split('?')[0]).is_absolute():
+			paths.extend(Path(p) for p in glob_module.glob(glob))
+		else:
+			paths.extend(Path(".").glob(glob))
+
 	if filelist is not None:
 		paths.extend((Path(line.strip()) for line in Path(filelist).read_text().strip().splitlines() if line.strip() != ""))
 
