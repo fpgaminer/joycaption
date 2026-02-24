@@ -62,7 +62,7 @@ class Config:
 	clip_grad_norm: Optional[float] = 1.0                # Clip gradient norm
 
 	dataset: str = "your_dataset.json"                   # Dataset path (parquet)
-	images_path: Path = Path("../data/resized-384-squish")   # Images path
+	images_path: Optional[Path] = None   # Images path
 	finetune: str = "fancyfeast/llama-joycaption-beta-one-hf-llava"   # Model to finetune from
 	gradient_checkpointing: bool = True                  # Use gradient checkpointing
 	test_size: int = 128                                 # Test size
@@ -215,7 +215,8 @@ class MainTrainer:
 		# Preprocess all images
 		for example in tqdm(source_ds, desc="Preprocessing images", dynamic_ncols=True, disable=self.rank != 0):
 			assert len(example['images']) == 1
-			image = Image.open(self.config.images_path / example['images'][0])
+			path = self.config.images_path / example['images'][0] if self.config.images_path is not None else example['images'][0]
+			image = Image.open(path)
 			if image.size != (384, 384):
 				image = image.resize((384, 384), Image.LANCZOS) # type: ignore
 			image = image.convert("RGB")

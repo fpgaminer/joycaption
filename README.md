@@ -2,7 +2,7 @@
 
 JoyCaption is an open, free, and uncensored captioning Visual Language Model (VLM).
 
-[**Try the Demo on HuggingFace**](https://huggingface.co/spaces/fancyfeast/joy-caption-beta-one) **|** [**Download the Current Model on Hugging Face**](https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava) **|** [**Latest Release Post**](https://civitai.com/articles/14672)
+[**Try the Demo on HuggingFace**](https://huggingface.co/spaces/fancyfeast/joy-caption-beta-one) **|** [**Download the Current Model on Hugging Face**](https://huggingface.co/fancyfeast/llama-joycaption-beta-one-hf-llava) **|** [**Latest Release Post**](https://civitai.com/articles/14672) **|** [**Data**](#datasets)
 
 ![This image is a digital meme featuring a photograph of a golden retriever walking on a wet asphalt road. The dog, with a light golden coat, wears a red collar and leash, and is captured mid-stride, with its tongue out. The background is blurred, emphasizing the dog. Above the dog, in bold black text on a white background, it reads, "Self-supervised Learning." The overall tone is humorous, combining the concept of self-supervised learning with the playful image of the dog.](dog.jpg)
 
@@ -271,3 +271,8 @@ Feedback is always welcome and crucial to helping me improve JoyCaption for ever
 * Alpha One: https://www.reddit.com/r/StableDiffusion/comments/1fm9pxa/joycaption_free_open_uncensored_vlm_alpha_one/
 * Alpha Two: https://civitai.com/articles/7697
 * Beta One: https://civitai.com/articles/14672
+
+
+## Datasets
+
+* Beta One Pretraining Data: https://huggingface.co/datasets/fancyfeast/joy-captioning-20250408a
