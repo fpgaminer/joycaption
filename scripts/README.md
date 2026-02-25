@@ -10,7 +10,8 @@ To run the script, use the following command:
 ./batch-caption.py --glob "path/to/images/*.jpg" --prompt "Write a descriptive caption for this image in a formal tone."
 ```
 
-This command will caption all the `.jpg` images in the specified directory using the provided prompt, writing `.txt` files alongside each image.
+This command will caption all the `.jpg` images in the relative or absolute directory using the provided prompt, writing `.txt` files alongside each image.
+
 
 ## Command-Line Arguments
 
